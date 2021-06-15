@@ -6,11 +6,13 @@ services:
     image: postgres:10.7-alpine
     volumes:
       - db-data:/var/lib/postgresql/data
-      - "db/postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql"
+      - type: bind
+        source: ./db/postgres-init.sql
+        target: /docker-entrypoint-initdb.d/postgres-init.sql
     ports:
       - "5432:5432"
     networks:
-      - backend  
+      - backend
     restart: always
     environment:
       POSTGRES_PASSWORD: password
@@ -38,12 +40,13 @@ services:
       - backend
     depends_on:
       - db
-    #environment:
+    environment:
+      DB_HOST_NAME: db
     restart: always
 
 networks:
   frontend:
   backend:
-      
+
 volumes:
   db-data:

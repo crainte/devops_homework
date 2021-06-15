@@ -1,10 +1,22 @@
 # Build API
-# This Dockerfile is very inefficient.  Convert this to a multi-stage docker build with a node12 container used as runtime.
-# If done correctly the final image should be < 300 MB.
-FROM node:12
+FROM node:12-alpine3.12 as build
+
 WORKDIR /app
-COPY ./package.json ./
-RUN npm install
+
 COPY . .
-RUN npm run build
+
+RUN npm install \
+    && npm run build \
+    && npm prune --production
+
+FROM node:12-alpine3.12 as final
+
+WORKDIR /app
+
+COPY --from=build --chown=1000:1000 /app/dist /app/dist
+COPY --from=build --chown=1000:1000 /app/node_modules /app/node_modules
+COPY --from=build --chown=1000:1000 /app/package.json /app/package.json
+
+USER 1000:1000
+
 CMD ["npm", "run", "start:prod"]
