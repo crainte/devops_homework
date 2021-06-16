@@ -47,3 +47,15 @@ database container. The containers are running now, tested localhost and I can
 create todo lists and items now.
 
 # Task 2
+This took a bit since I didn't have a personal AWS account. I didn't use any
+outside resources besides terraform registry docs:
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+# Task 3
+I just rsync'd the folder over before locking the instance down. This is not
+ideal at all.
+
+# Task 4
+I connected to the rds instance and ran the postgres init script that was
+provided for the db container. Then I only had to edit `DB_HOST_NAME` in the
+compose file and it worked.
