@@ -51,6 +51,8 @@ This took a bit since I didn't have a personal AWS account. I didn't use any
 outside resources besides terraform registry docs:
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 
+All terraform is located in the aws folder
+
 # Task 3
 I just rsync'd the folder over before locking the instance down. This is not
 ideal at all. I didn't see any obvious mechanism to send the deployment over.
