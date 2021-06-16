@@ -1,0 +1,6 @@
+# Ignore hidden terraform folder
+aws/.terraform
+# Ignore password files
+*.tfvars
+# Don't include the statefile
+terraform.tfstate*
