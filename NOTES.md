@@ -53,7 +53,8 @@ https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 
 # Task 3
 I just rsync'd the folder over before locking the instance down. This is not
-ideal at all.
+ideal at all. I didn't see any obvious mechanism to send the deployment over.
+Maybe docker context and using my local system?
 
 # Task 4
 I connected to the rds instance and ran the postgres init script that was
