@@ -16,6 +16,10 @@ variable "rds_password" {
   type = string
 }
 
+variable "alarm_email" {
+  type = string
+}
+
 variable "default_tags" {
   type    = map(any)
   default = { "Name" = "liquibase", "todo" = "Delete Me" }

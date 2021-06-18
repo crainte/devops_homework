@@ -24,3 +24,30 @@ resource "aws_elb" "this" {
     {}
   )
 }
+
+resource "aws_sns_topic" "notify" {
+  name = "notify"
+}
+
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.notify.arn
+  protocol  = "email"
+  endpoint  = var.alarm_email
+}
+
+resource "aws_cloudwatch_metric_alarm" "this" {
+  alarm_name          = "elb-target-down"
+  namespace           = "AWS/ELB"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "1"
+  datapoints_to_alarm = "1"
+  metric_name         = "UnHealthyHostCount"
+  period              = 300
+  statistic           = "Sum"
+  alarm_actions       = [aws_sns_topic.notify.arn]
+  ok_actions          = [aws_sns_topic.notify.arn]
+  treat_missing_data  = "breaching"
+  dimensions = {
+    LoadBalancerName = aws_elb.this.name
+  }
+}
